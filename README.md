@@ -1,4 +1,4 @@
-## 🔖 Tagowanie i cache
+## Tagowanie i cache
 
 Obrazy oznaczane są tagiem `latest` oraz wysyłane do:
 
@@ -10,7 +10,7 @@ Zastosowano `mode=max`, aby maksymalnie wykorzystywać wspólne warstwy. Dzięki
 
 Źródło: [Docker BuildKit cache reference](https://docs.docker.com/build/cache/backends/)
 
-## 🔒 Skanowanie CVE
+## Skanowanie CVE
 
 Zastosowano **Trivy**, ponieważ:
 - Jest darmowy, open source, bezpośrednio zintegrowany z GH Actions.
