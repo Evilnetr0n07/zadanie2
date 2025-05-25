@@ -55,7 +55,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          outputs: type=docker,dest=/tmp/image.tar
+          outputs: type=oci,dest=/tmp/image.tar
           push: false
           cache-from: |
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache
