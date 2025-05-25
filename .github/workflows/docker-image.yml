@@ -24,7 +24,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie2-app
+            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie2
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -54,7 +54,7 @@ jobs:
           docker buildx create --use --name oci-builder
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            --output type=oci,dest=${{ github.workspace }}/oci-image.tar \
+            --output type=oci,dest=oci-image.tar \
             --cache-from=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache \
             --cache-to=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max \
             --tag ${{ steps.meta.outputs.tags }} \
@@ -63,7 +63,7 @@ jobs:
       - name: Scan OCI image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: oci-archive:${{ github.workspace }}/oci-image.tar
+          image-ref: oci-image.tar
           format: 'table'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
