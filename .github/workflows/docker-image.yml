@@ -54,16 +54,15 @@ jobs:
           docker buildx create --use --name oci-builder
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            --output type=oci,dest=oci-image.tar \
             --cache-from=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache \
             --cache-to=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max \
-            --tag ${{ steps.meta.outputs.tags }} \
+            --tag zadanie1:scan \
             .
 
       - name: Scan OCI image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: oci-image.tar
+          image-ref: zadanie1:scan
           format: 'table'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
