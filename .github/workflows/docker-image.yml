@@ -60,6 +60,7 @@ jobs:
           cache-to: |
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max
           push: false
+          load: true
           tags: scan-image:latest
 
       - name: Scan image for vulnerabilities (Trivy)
