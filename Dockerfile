@@ -10,6 +10,7 @@ WORKDIR /app
 #skopiowanie wymaganych zależności oraz ich instalacja
 COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --user --no-cache-dir --upgrade setuptools
 
 #etap uruchomienia aplikacji
 FROM python:3.11-slim
