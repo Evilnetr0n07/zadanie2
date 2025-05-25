@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 #etap budowania aplikacji
 FROM python:3.11-slim AS builder
 
