@@ -24,7 +24,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie1-app
+            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie2
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -58,9 +58,9 @@ jobs:
           outputs: type=docker,dest=/tmp/image.oci
           push: false
           cache-from: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache
           cache-to: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache,mode=max
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Scan image for vulnerabilities (Trivy)
@@ -81,7 +81,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache
           cache-to: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache,mode=max
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
