@@ -24,7 +24,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie1-app
+            ghcr.io/${{ vars.GHCR_USERNAME }}/zadanie2-app
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -55,8 +55,8 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --output type=oci,dest=oci-image.tar \
-            --cache-from=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache \
-            --cache-to=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache,mode=max \
+            --cache-from=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache \
+            --cache-to=type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max \
             --tag ${{ steps.meta.outputs.tags }} \
             .
 
@@ -78,7 +78,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache
           cache-to: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie1-cache:cache,mode=max
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2-cache:cache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
