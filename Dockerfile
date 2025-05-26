@@ -1,5 +1,5 @@
 #etap budowania aplikacji
-FROM python:3.11-slim AS builder
+FROM python:3.13-slim AS builder
 
 #dodanie informacji o autorze zgodnych z OCI
 LABEL org.opencontainers.image.authors="Marek Zając"
