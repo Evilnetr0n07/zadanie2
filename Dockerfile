@@ -9,6 +9,7 @@ WORKDIR /app
 
 #skopiowanie wymaganych zależności oraz ich instalacja
 COPY requirements.txt .
+RUN pip uninstall python3-setuptools
 RUN pip install -vvv --user --no-cache-dir -r requirements.txt
 #RUN pip install --user --no-cache-dir --upgrade setuptools
 
