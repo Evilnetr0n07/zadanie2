@@ -1,2 +1,2 @@
 flask
-setuptools>=80
+setuptools>=80.0.0
