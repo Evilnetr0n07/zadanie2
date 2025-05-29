@@ -14,7 +14,7 @@ Zastosowano `mode=max`, aby maksymalnie wykorzystywać wspólne warstwy. Dzięki
 
 Zastosowano **Trivy**, ponieważ:
 - Jest darmowy, open source, bezpośrednio zintegrowany z GH Actions.
-- Pozwala zablokować publikację, jeśli występują krytyczne CVE
+- Pozwala zablokować publikację, jeśli występują krytyczne CVE.
 
 Źródło: [Trivy GitHub Action](https://github.com/aquasecurity/trivy-action)
 
