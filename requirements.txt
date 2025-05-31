@@ -1,2 +1,0 @@
-flask
-setuptools>=80.0.0
