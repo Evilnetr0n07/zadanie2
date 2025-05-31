@@ -1,44 +1,44 @@
-#etap budowania aplikacji
-FROM python:3.13-slim AS builder
+#Etap 1 - Budowanie aplikacji
+FROM golang:1.22 AS builder
 
-#dodanie informacji o autorze zgodnych z OCI
+# Dodanie informacji o autorze zgodnych z OCI
 LABEL org.opencontainers.image.authors="Marek Zając"
 
-#ustawienie katalogu roboczego
+# Ustawienie katalogu roboczego
 WORKDIR /app
 
-#skopiowanie wymaganych zależności oraz ich instalacja
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip uninstall python3-setuptools
-RUN pip install -vvv --user --no-cache-dir -r requirements.txt
-#RUN pip install --user --no-cache-dir --upgrade setuptools
-
-#etap uruchomienia aplikacji
-FROM python:3.11-slim
-
-#dodanie informacji o autorze zgodnych z OCI
-LABEL org.opencontainers.image.authors="Marek Zając"
-
-#ustawienie katalogu roboczego
-WORKDIR /app
-
-#skopiowanie danych z poprzedniego etapu
-COPY --from=builder /root/.local /root/.local
-ENV PATH=/root/.local/bin:$PATH
-
-#skopiowanie potrzebnych plików aplikacji i szablonu
+# Kopiowanie plików
 COPY . .
 
-#stworzenie zmiennej środowiskowej definiującej port na którym ma działać aplikacja
+# Budowa aplikacji
+RUN go build -o zadanie2 main.go
+
+#Etap 2 - Uruchomienie aplikacji
+FROM debian:bookworm-slim
+
+# Dodanie informacji o autorze zgodnych z OCI
+LABEL org.opencontainers.image.authors="Marek Zając"
+
+# Instalacja certyfikatów SSL (dla net/http)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl \
+ && rm -rf /var/lib/apt/lists/*
+
+# Ustawienie katalogu roboczego
+WORKDIR /app
+
+# Zmienna środowiskowa portu
 ENV PORT=5000
 
-#sprawdzenie czy aplikacja działa poprawnie
+# Kopiowanie plików z poprzedniego etapu
+COPY --from=builder /app/zadanie2 .
+COPY --from=builder /app/templates ./templates
+
+# Sprawdzenie czy aplikacja działa poprawnie
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD curl --fail http://localhost:5000 || exit 1
 
-#informacja na jakim porcie nasłuchuje informacja
+# Informacja na jakim porcie nasłuchuje informacja
 EXPOSE 5000
 
-#uruchomienie aplikacji
-CMD ["python", "app.py"]
-
+# Uruchomienie aplikacji
+CMD ["./zadanie2"]
